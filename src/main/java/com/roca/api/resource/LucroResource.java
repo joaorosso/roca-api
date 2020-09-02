@@ -39,9 +39,9 @@ public class LucroResource {
         return ResponseEntity.ok(lucroAtual);
     }
 
-    @GetMapping
-    public List<Lucro> get() {
-        return lucroRepository.findAll();
+    @GetMapping("/roca/{rocaId}")
+    public List<Lucro> get(@PathVariable UUID rocaId) {
+        return lucroRepository.findAllByRocaId(rocaId);
     }
 
     @GetMapping("/{id}")

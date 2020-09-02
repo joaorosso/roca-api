@@ -19,9 +19,9 @@ public class Roca {
 
     private boolean fechado;
 
-    @Formula("(SELECT sum(d.total) from Despesa d WHERE d.roca_id = id)")
+    @Formula("(SELECT sum(d.quantidade * d.valor_unitario) from Despesa d WHERE d.roca_id = id)")
     private Double despesa;
 
-    @Formula("(SELECT sum(l.total) from Lucro l WHERE l.roca_id = id)")
+    @Formula("(SELECT sum(l.quantidade * l.valor_unitario) from Lucro l WHERE l.roca_id = id)")
     private Double lucro;
 }

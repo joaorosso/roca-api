@@ -21,17 +21,11 @@ public class DespesaResource {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Despesa post(@RequestBody Despesa despesa) {
-        Double total = despesa.getQuantidade() * despesa.getValorUnitario();
-        despesa.setTotal(total);
-
         return despesaRepository.save(despesa);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Despesa> put(@PathVariable UUID id, @RequestBody Despesa despesa) {
-        Double total = despesa.getQuantidade() * despesa.getValorUnitario();
-        despesa.setTotal(total);
-
         Despesa despesaAtual = despesaRepository.findById(id).orElse(null);
         BeanUtils.copyProperties(despesa, despesaAtual, "id");
         despesaRepository.save(despesaAtual);
@@ -39,9 +33,9 @@ public class DespesaResource {
         return ResponseEntity.ok(despesaAtual);
     }
 
-    @GetMapping
-    public List<Despesa> get() {
-        return despesaRepository.findAll();
+    @GetMapping("/roca/{rocaId}")
+    public List<Despesa> get(@PathVariable UUID rocaId) {
+        return despesaRepository.findAllByRocaId(rocaId);
     }
 
     @GetMapping("/{id}")

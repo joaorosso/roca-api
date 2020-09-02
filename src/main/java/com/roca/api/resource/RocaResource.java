@@ -2,6 +2,7 @@ package com.roca.api.resource;
 
 import com.roca.api.model.Roca;
 import com.roca.api.repository.RocaRepository;
+import com.roca.api.repository.filter.RocaFilter;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,18 +28,20 @@ public class RocaResource {
     @PutMapping("/{id}")
     public ResponseEntity<Roca> put(@PathVariable UUID id, @RequestBody Roca roca) throws Exception {
         Roca rocaAtual = rocaRepository.findById(id).orElse(null);
+
         if (rocaAtual.isFechado()) {
-            throw new Exception("Não é possível alterar uma roça fechada.");
+            rocaAtual.setFechado(roca.isFechado());
         } else {
             BeanUtils.copyProperties(roca, rocaAtual, "id");
-            rocaRepository.save(rocaAtual);
-            return ResponseEntity.ok(rocaAtual);
         }
+
+        rocaRepository.save(rocaAtual);
+        return ResponseEntity.ok(rocaAtual);
     }
 
     @GetMapping
-    public List<Roca> get() {
-        return rocaRepository.findAll();
+    public List<Roca> get(RocaFilter rocaFilter) {
+        return rocaRepository.filtrar(rocaFilter);
     }
 
     @GetMapping("/{id}")

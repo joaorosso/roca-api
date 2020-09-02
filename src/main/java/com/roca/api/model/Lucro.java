@@ -2,6 +2,7 @@ package com.roca.api.model;
 
 import com.sun.istack.NotNull;
 import lombok.Data;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -27,5 +28,6 @@ public class Lucro {
     @NotNull
     private Double valorUnitario;
 
+    @Formula("(SELECT quantidade * valor_unitario from Lucro l WHERE l.id = id)")
     private Double total;
 }
