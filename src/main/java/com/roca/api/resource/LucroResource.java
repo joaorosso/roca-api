@@ -21,17 +21,11 @@ public class LucroResource {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Lucro post(@RequestBody Lucro lucro) {
-        Double total = lucro.getQuantidade() * lucro.getValorUnitario();
-        lucro.setTotal(total);
-
         return lucroRepository.save(lucro);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Lucro> put(@PathVariable UUID id, @RequestBody Lucro lucro) {
-        Double total = lucro.getQuantidade() * lucro.getValorUnitario();
-        lucro.setTotal(total);
-
         Lucro lucroAtual = lucroRepository.findById(id).orElse(null);
         BeanUtils.copyProperties(lucro, lucroAtual, "id");
         lucroRepository.save(lucroAtual);
