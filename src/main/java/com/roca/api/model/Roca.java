@@ -5,6 +5,8 @@ import lombok.Data;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -19,9 +21,11 @@ public class Roca {
 
     private boolean fechado;
 
+    private Date dataFechamento;
+
     @Formula("(SELECT sum(d.quantidade * d.valor_unitario) from Despesa d WHERE d.roca_id = id)")
-    private Double despesa;
+    private BigDecimal despesa;
 
     @Formula("(SELECT sum(l.quantidade * l.valor_unitario) from Lucro l WHERE l.roca_id = id)")
-    private Double lucro;
+    private BigDecimal lucro;
 }

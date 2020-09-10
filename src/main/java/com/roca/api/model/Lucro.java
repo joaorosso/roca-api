@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
@@ -27,11 +28,11 @@ public class Lucro {
     private String descricao;
 
     @NotNull
-    private Double quantidade;
+    private BigDecimal quantidade;
 
     @NotNull
-    private Double valorUnitario;
+    private BigDecimal valorUnitario;
 
     @Formula("(SELECT quantidade * valor_unitario from Lucro l WHERE l.id = id)")
-    private Double total;
+    private BigDecimal total;
 }

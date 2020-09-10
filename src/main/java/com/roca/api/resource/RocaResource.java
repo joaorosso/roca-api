@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,12 +27,14 @@ public class RocaResource {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Roca> put(@PathVariable UUID id, @RequestBody Roca roca) throws Exception {
+    public ResponseEntity<Roca> put(@PathVariable UUID id, @RequestBody Roca roca) {
         Roca rocaAtual = rocaRepository.findById(id).orElse(null);
 
-        if (rocaAtual.isFechado()) {
+        if (roca.isFechado()) {
             rocaAtual.setFechado(roca.isFechado());
+            rocaAtual.setDataFechamento(new Date());
         } else {
+            rocaAtual.setDataFechamento(null);
             BeanUtils.copyProperties(roca, rocaAtual, "id");
         }
 
@@ -53,5 +56,10 @@ public class RocaResource {
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable UUID id) {
         rocaRepository.deleteById(id);
+    }
+
+    @DeleteMapping()
+    public void deleteByListId(@RequestBody List<UUID> uuidList) {
+        rocaRepository.deleteByIdIn(uuidList);
     }
 }

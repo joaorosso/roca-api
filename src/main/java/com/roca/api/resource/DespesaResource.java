@@ -2,9 +2,12 @@ package com.roca.api.resource;
 
 import com.roca.api.model.Despesa;
 import com.roca.api.repository.DespesaRepository;
+import com.roca.api.service.DespesaService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +20,9 @@ public class DespesaResource {
 
     @Autowired
     private DespesaRepository despesaRepository;
+
+    @Autowired
+    private DespesaService despesaService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -46,5 +52,14 @@ public class DespesaResource {
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable UUID id) {
         despesaRepository.deleteById(id);
+    }
+
+    @GetMapping("/report/{rocaId}")
+    public ResponseEntity<byte[]> despesasReport(@PathVariable UUID rocaId) throws Exception {
+        byte[] report = despesaService.despesasReport(rocaId);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE)
+                .body(report);
     }
 }
