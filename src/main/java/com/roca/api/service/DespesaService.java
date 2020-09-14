@@ -1,5 +1,6 @@
 package com.roca.api.service;
 
+import com.roca.api.dto.DespesaDto;
 import com.roca.api.model.Despesa;
 import com.roca.api.model.Roca;
 import com.roca.api.repository.DespesaRepository;
@@ -29,6 +30,13 @@ public class DespesaService {
     public byte[] despesasReport(UUID rocaId) throws Exception {
         Roca roca = rocaRepository.findById(rocaId).orElse(null);
         List<Despesa> despesas = despesaRepository.findAllByRocaId(rocaId);
+//        List<DespesaDto> despesasReport = new ArrayList<>();
+//
+//        for (Despesa despesa : despesas) {
+//            DespesaDto despesaDto = new DespesaDto();
+//            despesaDto.setDescricao(despesa.getDescricao());
+//            despesasReport.add(despesaDto);
+//        }
 
         Map<String, Object> parameters = new HashMap<>();
 
@@ -38,7 +46,7 @@ public class DespesaService {
         InputStream inputStream = this.getClass().getResourceAsStream(
                 "/reports/despesas.jasper");
 
-        JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parameters, new JRBeanCollectionDataSource(despesas));
+        JasperPrint jasperPrint = JasperFillManager.fillReport(inputStream, parameters, new JRBeanCollectionDataSource(despesas, false));
 
         return JasperExportManager.exportReportToPdf(jasperPrint);
     }
