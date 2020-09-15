@@ -2,9 +2,12 @@ package com.roca.api.resource;
 
 import com.roca.api.model.Lucro;
 import com.roca.api.repository.LucroRepository;
+import com.roca.api.service.VendasService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +20,9 @@ public class LucroResource {
 
     @Autowired
     private LucroRepository lucroRepository;
+
+    @Autowired
+    private VendasService vendasService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -46,5 +52,15 @@ public class LucroResource {
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable UUID id) {
         lucroRepository.deleteById(id);
+    }
+
+    @GetMapping("/report/{rocaId}")
+    public ResponseEntity<byte[]> vendasReport(@PathVariable UUID rocaId) throws Exception {
+        byte[] report = vendasService.vendasReport(rocaId);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=relatorio-vendas.pdf")
+                .body(report);
     }
 }

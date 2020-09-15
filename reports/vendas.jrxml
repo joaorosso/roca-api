@@ -4,22 +4,26 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
 	<parameter name="ROCA_DESCRICAO" class="java.lang.String"/>
 	<parameter name="TOTAL_DESPESAS" class="java.math.BigDecimal"/>
+	<parameter name="TOTAL_VENDAS" class="java.math.BigDecimal"/>
+	<parameter name="TOTAL_LUCRO" class="java.math.BigDecimal"/>
 	<field name="descricao" class="java.lang.String"/>
 	<field name="data" class="java.util.Date"/>
 	<field name="quantidade" class="java.math.BigDecimal"/>
 	<field name="valorUnitario" class="java.math.BigDecimal"/>
 	<field name="total" class="java.math.BigDecimal"/>
 	<title>
-		<band height="50" splitType="Stretch">
+		<band height="30" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<textField>
-				<reportElement x="27" y="10" width="500" height="30" uuid="08bae30d-3ba4-4317-bb8a-722ca7c3408f">
+				<reportElement x="27" y="0" width="500" height="30" uuid="08bae30d-3ba4-4317-bb8a-722ca7c3408f">
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="16"/>
 				</textElement>
-				<textFieldExpression><![CDATA["Despesas da roça " + $P{ROCA_DESCRICAO}]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Vendas da roça " + $P{ROCA_DESCRICAO}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
@@ -56,7 +60,7 @@
 				<textElement verticalAlignment="Middle">
 					<paragraph leftIndent="3" rightIndent="3"/>
 				</textElement>
-				<text><![CDATA[REFERENTE]]></text>
+				<text><![CDATA[DESCRIÇÃO]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="285" y="0" width="70" height="30" uuid="7f3f8da4-a1a2-4a1a-a7c3-34d9b5822bc2">
@@ -188,24 +192,57 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="32">
-			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+		<band height="60">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
-			<staticText>
-				<reportElement x="0" y="0" width="278" height="32" uuid="a64fcf6b-6aea-4f16-9fdd-ddfb8e2b5053">
-					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
-					<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+			<frame>
+				<reportElement x="0" y="35" width="555" height="25" uuid="33765a30-be2f-4f17-a2d8-ab87def79dac">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
 				</reportElement>
-				<textElement verticalAlignment="Middle">
-					<paragraph leftIndent="3" rightIndent="3"/>
-				</textElement>
-				<text><![CDATA[TOTAL:]]></text>
-			</staticText>
-			<textField pattern="¤#,##0.00;¤-#,##0.00">
-				<reportElement x="278" y="0" width="277" height="32" uuid="d8c9e578-ca39-4f60-a180-ccdd6bf5d8e1"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$P{TOTAL_DESPESAS}]]></textFieldExpression>
-			</textField>
+				<textField pattern="¤#,##0.00;¤-#,##0.00">
+					<reportElement x="0" y="0" width="185" height="25" uuid="012c33ad-c9dd-4343-94d5-6b113ff20782"/>
+					<textElement textAlignment="Center" verticalAlignment="Top"/>
+					<textFieldExpression><![CDATA[$P{TOTAL_VENDAS}]]></textFieldExpression>
+				</textField>
+				<textField pattern="¤#,##0.00;¤-#,##0.00">
+					<reportElement x="185" y="0" width="185" height="25" uuid="5c6ce5a8-ed83-4213-80c7-3ee45534b0c2"/>
+					<textElement textAlignment="Center" verticalAlignment="Top"/>
+					<textFieldExpression><![CDATA[$P{TOTAL_DESPESAS}]]></textFieldExpression>
+				</textField>
+				<textField pattern="¤#,##0.00;¤-#,##0.00">
+					<reportElement x="370" y="0" width="185" height="25" uuid="9c3f8b31-2855-4259-8dd7-8138146355d7"/>
+					<textElement textAlignment="Center" verticalAlignment="Top"/>
+					<textFieldExpression><![CDATA[$P{TOTAL_LUCRO}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<frame>
+				<reportElement x="0" y="10" width="555" height="25" uuid="6eabd56b-c53e-49ca-9828-b0b74911a18a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+				</reportElement>
+				<staticText>
+					<reportElement x="0" y="0" width="185" height="25" uuid="15f280ab-f90a-4087-8388-cda4145097a1"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[TOTAL VENDAS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="185" y="0" width="185" height="25" uuid="d9f5568e-5ff8-4f00-8a04-37a810931a24"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[TOTAL DESPESAS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="370" y="0" width="185" height="25" uuid="8976fdde-2120-438c-baa4-15698da61193"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[TOTAL]]></text>
+				</staticText>
+			</frame>
 		</band>
 	</summary>
 </jasperReport>
