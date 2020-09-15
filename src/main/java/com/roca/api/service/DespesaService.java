@@ -30,13 +30,6 @@ public class DespesaService {
     public byte[] despesasReport(UUID rocaId) throws Exception {
         Roca roca = rocaRepository.findById(rocaId).orElse(null);
         List<Despesa> despesas = despesaRepository.findAllByRocaId(rocaId);
-//        List<DespesaDto> despesasReport = new ArrayList<>();
-//
-//        for (Despesa despesa : despesas) {
-//            DespesaDto despesaDto = new DespesaDto();
-//            despesaDto.setDescricao(despesa.getDescricao());
-//            despesasReport.add(despesaDto);
-//        }
 
         Map<String, Object> parameters = new HashMap<>();
 

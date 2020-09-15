@@ -60,6 +60,7 @@ public class DespesaResource {
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=relatorio-despesas.pdf")
                 .body(report);
     }
 }
