@@ -1,5 +1,6 @@
 package com.roca.api.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 import lombok.Data;
 
@@ -22,6 +23,7 @@ public class Usuario {
     private String username;
 
     @NotNull
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
