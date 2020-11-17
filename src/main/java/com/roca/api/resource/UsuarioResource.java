@@ -41,6 +41,9 @@ public class UsuarioResource {
         String password = usuario.getPassword();
         usuario.setPassword(passwordEncoder.encode(password));
 
+        String username = usuario.getUsername().toLowerCase();
+        usuario.setUsername(username);
+
         return usuarioRepository.save(usuario);
     }
 
@@ -51,6 +54,9 @@ public class UsuarioResource {
 
         String password = usuarioAtual.getPassword();
         usuarioAtual.setPassword(passwordEncoder.encode(password));
+
+        String username = usuarioAtual.getUsername().toLowerCase();
+        usuarioAtual.setUsername(username);
 
         usuarioRepository.save(usuarioAtual);
 
