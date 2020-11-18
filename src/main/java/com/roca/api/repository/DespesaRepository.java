@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface DespesaRepository extends JpaRepository<Despesa, UUID> {
     List<Despesa> findAllByRocaId(UUID rocaId);
+
+    List<Despesa> findByRocaIdOrderByDataAsc(UUID rocaId);
 }

@@ -41,7 +41,7 @@ public class LucroResource {
 
     @GetMapping("/roca/{rocaId}")
     public List<Lucro> get(@PathVariable UUID rocaId) {
-        return lucroRepository.findAllByRocaId(rocaId);
+        return lucroRepository.findByRocaIdOrderByDataAsc(rocaId);
     }
 
     @GetMapping("/{id}")

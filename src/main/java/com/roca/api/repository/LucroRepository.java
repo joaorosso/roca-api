@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface LucroRepository extends JpaRepository<Lucro, UUID> {
     List<Lucro> findAllByRocaId(UUID rocaId);
+
+    List<Lucro> findByRocaIdOrderByDataAsc(UUID rocaId);
 }
