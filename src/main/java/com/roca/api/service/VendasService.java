@@ -26,7 +26,7 @@ public class VendasService {
 
     public byte[] vendasReport(UUID rocaId) throws Exception {
         Roca roca = rocaRepository.findById(rocaId).orElse(null);
-        List<Lucro> vendas = lucroRepository.findAllByRocaId(rocaId);
+        List<Lucro> vendas = lucroRepository.findByRocaIdOrderByDataAsc(rocaId);
 
         Map<String, Object> parameters = new HashMap<>();
 
