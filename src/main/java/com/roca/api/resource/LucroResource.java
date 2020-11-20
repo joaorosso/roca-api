@@ -1,16 +1,20 @@
 package com.roca.api.resource;
 
+import com.roca.api.model.Despesa;
 import com.roca.api.model.Lucro;
 import com.roca.api.repository.LucroRepository;
 import com.roca.api.service.VendasService;
+import com.roca.api.util.ExcelGenerator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayInputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -62,5 +66,20 @@ public class LucroResource {
                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_PDF_VALUE)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=relatorio-vendas.pdf")
                 .body(report);
+    }
+
+    @GetMapping("/excel/{rocaId}")
+    public ResponseEntity<InputStreamResource> despesasExcel(@PathVariable UUID rocaId) throws Exception {
+        List<Lucro> lucros = lucroRepository.findByRocaIdOrderByDataAsc(rocaId);
+
+        ByteArrayInputStream in = ExcelGenerator.customersToExcel(lucros, "lucros");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "attachment; filename=despesas.xlsx");
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .body(new InputStreamResource(in));
     }
 }
